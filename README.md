@@ -15,6 +15,8 @@ authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
 
 ## Application URL
 [29jase0j20.execute-api.us-east-1.amazonaws.com](https://29jase0j20.execute-api.us-east-1.amazonaws.com/).
+
+
 This template demonstrates how to develop and deploy a simple Node Express API service running on AWS Lambda using the traditional Serverless Framework.
 
 ## Anatomy of the template
