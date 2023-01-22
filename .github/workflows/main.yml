@@ -1,8 +1,10 @@
 name: Deployment
 run-name: ${{ github.actor }} is deploying the project 🚀
 on: [push]
+
 jobs:
-  Explore-GitHub-Actions:
+  Deploy-Application:
     runs-on: ubuntu-latest
-    steps:
-      - run: curl indigitamenta.com:4500/backend
+     - name: Deploy the application
+       if: contains(github.event.head_commit.message, 'deploy')
+       run: curl indigitamenta.com:4500/backend
