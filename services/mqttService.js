@@ -26,11 +26,11 @@ export default class
         console.log(`VALUE: ${message}`)
     }
 
-    listen() {
-        console.log("Listening for MQTT messages...")
-        client.subscribe('rimacMobileTeam/1')
-        client.on('message', function (topic, message) {
-            console.log(message)
-        })
-    }
+    // listen() {
+    //     console.log("Listening for MQTT messages...")
+    //     client.subscribe('rimacMobileTeam/1')
+    //     client.on('message', function (topic, message) {
+    //         console.log(message)
+    //     })
+    // }
 }
