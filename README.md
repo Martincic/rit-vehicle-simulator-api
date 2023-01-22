@@ -14,7 +14,7 @@ type Query {
   }
 ```
 
-## Rules
+## Rules 
 
 Data can be requested from the graph, and in that case it will return only a dummy, random data.
 
