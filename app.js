@@ -15,7 +15,7 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 // Start the application
-app.listen(80);
+app.listen(4000);
 console.log('Running a GraphQL API server at http://localhost:4000/graphql');
 
 import mqttService from "./services/mqttService.js";
