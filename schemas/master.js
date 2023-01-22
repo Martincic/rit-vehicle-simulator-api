@@ -7,6 +7,7 @@ export var schema = buildSchema(`
     HVAC(status: Boolean): Boolean,
     stateOfCharge(state: Int): Int,
     latitude(lat: Float): Float,
-    longitude(lon: Float): Float
+    longitude(lon: Float): Float,
+    test: String
   }
 `);
