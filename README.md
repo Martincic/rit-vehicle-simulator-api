@@ -15,6 +15,8 @@ npm update
 reboot application
 ```
 
+*NOTE:* Action will run only if the commit message contains text `deploy`.
+
 ## Query
 ```
 type Query {
