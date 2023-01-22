@@ -1,110 +1,43 @@
-<!--
-title: 'Serverless Framework Node Express API on AWS'
-description: 'This template demonstrates how to develop and deploy a simple Node Express API running on AWS Lambda using the traditional Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-priority: 1
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
-
-# Serverless Framework Node Express API on AWS
+# GraphQL API 
 
 ## Application URL
-[29jase0j20.execute-api.us-east-1.amazonaws.com](https://29jase0j20.execute-api.us-east-1.amazonaws.com/).
+[http://indigitamenta.com:4000/graphql](http://indigitamenta.com:4000/graphql).
 
-
-This template demonstrates how to develop and deploy a simple Node Express API service running on AWS Lambda using the traditional Serverless Framework.
-
-## Anatomy of the template
-
-This template configures a single function, `api`, which is responsible for handling all incoming requests thanks to the `httpApi` event. To learn more about `httpApi` event configuration options, please refer to [httpApi event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/). As the event is configured in a way to accept all incoming requests, `express` framework is responsible for routing and handling requests internally. Implementation takes advantage of `serverless-http` package, which allows you to wrap existing `express` applications. To learn more about `serverless-http`, please refer to corresponding [GitHub repository](https://github.com/dougmoscrop/serverless-http).
-
-## Usage
-
-### Deployment
-
-Install dependencies with:
-
+## Query
 ```
-npm install
+type Query {
+    speed(speed: Int): Int
+    HVAC(status: Boolean): Boolean,
+    stateOfCharge(state: Int): Int,
+    latitude(lat: Float): Float,
+    longitude(lon: Float): Float
+  }
 ```
 
-and then deploy with:
+## Rules
 
+Data can be requested from the graph, and in that case it will return only a dummy, random data.
+
+### Example fetch
 ```
-serverless deploy
-```
-
-After running deploy, you should see output similar to:
-
-```bash
-Deploying aws-node-express-api-project to stage dev (us-east-1)
-
-✔ Service deployed to stack aws-node-express-api-project-dev (196s)
-
-endpoint: ANY - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com
-functions:
-  api: aws-node-express-api-project-dev-api (766 kB)
+# Fetch state of charge, latitude and longitude
+curl 'http://indigitamenta.com:4000/graphql?' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"query":"{\n  stateOfCharge, latitude, longitude\n}\n","variables":null}'
 ```
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [`httpApi` event docs](https://www.serverless.com/framework/docs/providers/aws/events/http-api/).
+Data can also be sent to the API, in which case it will publish the new data to the MQTT Broker.
 
-### Invocation
+As of now, it will publish the data to `rimacWebTeam/1` channel. Every bit of data that is uploaded will be sent over in JSON format. If we take a look at the following example upload, it will publish 2 different messages to the MQTT Broker
 
-After successful deployment, you can call the created application via HTTP:
+Sent messages: 
+ - `{ "stateOfCharge" : 60 }`
+ - `{ "speed" : 87 }`
 
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
+### Example upload
 ```
-
-Which should result in the following response:
-
+# Upload new state of charge and speed values
+curl 'http://indigitamenta.com:4000/graphql?' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"query":"{\n  stateOfCharge(state: 60),\n  speed(speed: 87)\n}","variables":null}'
 ```
-{"message":"Hello from root!"}
-```
-
-Calling the `/hello` path with:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/hello
-```
-
-Should result in the following response:
-
-```bash
-{"message":"Hello from path!"}
-```
-
-If you try to invoke a path or method that does not have a configured handler, e.g. with:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/nonexistent
-```
-
-You should receive the following response:
-
-```bash
-{"error":"Not Found"}
-```
-
-### Local development
-
-It is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
-
-```bash
-serverless plugin install -n serverless-offline
-```
-
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
-
-After installation, you can start local emulation with:
-
-```
-serverless offline
-```
-
-To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).
