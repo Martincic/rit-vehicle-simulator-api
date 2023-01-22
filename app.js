@@ -1,46 +1,19 @@
-var createError = require("http-errors");
-const serverless = require("serverless-http");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var dotenv = require("dotenv");
-var jade = require("jade");
-
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-
+// Import Express app and init
+import { graphqlHTTP } from 'express-graphql';
+import express from 'express';
 var app = express();
-const env = dotenv.config({ path: `.env.local` });
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.set('view engine', 'jade');
+// Import config
+import { router } from "./router.js";
+import { schema } from "./schemas/master.js";
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+// Setup the endpoint
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: router,
+  graphiql: true,
+}));
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
-
-exports.app = app;
-exports.handler = serverless(app);
-// exports.method = function() {};
-// exports.otherMethod = function() {};
-
-//module.exports.handler = serverless(app);
+// Start the application
+app.listen(4000);
+console.log('Running a GraphQL API server at http://localhost:4000/graphql');

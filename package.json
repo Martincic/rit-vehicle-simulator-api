@@ -2,19 +2,19 @@
   "name": "vehicle-simulator",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app.js",
+    "debug": "nodemon app.js"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "express": "~4.16.1",
+    "express-graphql": "^0.12.0",
     "http-errors": "~1.6.3",
     "jade": "^1.11.0",
     "morgan": "~1.9.1",
-    "mqtt": "^4.3.7",
-    "serverless": "*",
-    "serverless-http": "^3.1.0"
+    "mqtt": "^4.3.7"
   }
 }
