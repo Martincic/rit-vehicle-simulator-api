@@ -1,7 +1,10 @@
 // Import Express app and init
 import { graphqlHTTP } from 'express-graphql';
 import express from 'express';
+import cors from 'cors';
+
 var app = express();
+app.use(cors());
 
 // Import config
 import { router } from "./router.js";
