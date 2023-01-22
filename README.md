@@ -6,11 +6,11 @@
 ## Query
 ```
 type Query {
-    speed(speed: Int): Int
     HVAC(status: Boolean): Boolean,
     stateOfCharge(state: Int): Int,
+    longitude(lon: Float): Float,
     latitude(lat: Float): Float,
-    longitude(lon: Float): Float
+    speed(speed: Int): Int
   }
 ```
 
