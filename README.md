@@ -1,7 +1,19 @@
-# GraphQL API 
+# RIT Vehicle simulator graphQL API 
 
-## Application URL
+### Application 
 [http://indigitamenta.com:4000/graphql](http://indigitamenta.com:4000/graphql).
+
+
+### Auto-deployment
+
+Automatic deployment runs the following:
+```
+git pull
+
+npm update
+
+reboot application
+```
 
 ## Query
 ```
