@@ -14,10 +14,26 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
+import mqtt from 'mqtt'
+import dotenv from 'dotenv'
+dotenv.config()
+
+// Define MQTT Connection options
+const options = {
+    host: process.env.HOST,
+    port: process.env.PORT,
+    protocol: 'mqtts',
+    username: process.env.USER,
+    password: process.env.PASSWORD,
+}
+const client = mqtt.connect(options); 
+
+console.log("Listening for MQTT messages...")
+client.subscribe('rimacMobileTeam/1')
+client.on('message', function (topic, message) {
+    console.log("RECEIVED: " + message)
+})
+
 // Start the application
 app.listen(4000);
 console.log('Running a GraphQL API server at http://localhost:4000/graphql');
-
-// import mqttService from "./services/mqttService.js";
-// let mqtt = new mqttService();
-// mqtt.listen();

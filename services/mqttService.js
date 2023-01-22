@@ -18,19 +18,13 @@ export default class
     sendMessage(ID, field, value) 
     {
         let message = `{"${field}":"${value}"}`;
-        let carID = `rimacMobileTeam/${ID}`;
+        let carID = `rimacWebTeam/${ID}`;
 
-        client.publish('rimacMobileTeam/1', message);
+
+        client.publish(carID, message, [{ retain: true}, { qos: 2}]);
         client.end()
+
         console.log(`Message dispatched to car: ${carID}`)
         console.log(`VALUE: ${message}`)
     }
-
-    // listen() {
-    //     console.log("Listening for MQTT messages...")
-    //     client.subscribe('rimacMobileTeam/1')
-    //     client.on('message', function (topic, message) {
-    //         console.log(message)
-    //     })
-    // }
 }
