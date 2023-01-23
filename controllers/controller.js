@@ -33,7 +33,7 @@ export default class {
     // Random latitude/longitude with 3 decimals
     latitude(args)
     {
-        let num = Math.random()*180;
+        let num = Math.random()*90;
         let posorneg = Math.floor(Math.random());
         let value = 0;
 
