@@ -46,7 +46,7 @@ export default class {
 
     longitude(args)
     {
-        let num = Math.random()*180;
+        let num = Math.random()*90;
         let posorneg = Math.floor(Math.random());
         let value = 0;
 
