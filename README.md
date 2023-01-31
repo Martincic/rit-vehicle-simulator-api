@@ -3,7 +3,6 @@
 ### Application 
 [http://indigitamenta.com:4000/graphql](http://indigitamenta.com:4000/graphql).
 
-
 ### Auto-deployment
 
 Automatic deployment runs the following:
@@ -16,6 +15,15 @@ reboot application
 ```
 
 *NOTE:* Action will run only if the commit message contains text `deploy`.
+
+## Local Development 
+In order to start the application in local environment you need to have Docker.
+
+The application can be started with:
+```
+  docker-compose up -d
+```
+After initializing the containers, the application should be available on [http://localhost:4000/graphql](http://localhost:4000/graphql).
 
 ## Query
 ```
