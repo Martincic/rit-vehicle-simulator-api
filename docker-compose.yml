@@ -12,6 +12,8 @@ services:
       dockerfile: .docker/node/Dockerfile
     ports:
       - "4000:4000"
+    volumes:
+      - .:/app
     depends_on:
       - db
     restart: on-failure

@@ -17,13 +17,19 @@ reboot application
 *NOTE:* Action will run only if the commit message contains text `deploy`.
 
 ## Local Development 
-In order to start the application in local environment you need to have Docker.
+The environment is setup with nodemon and is sharing volume with current directory. 
+This means that any changes you create in project, after the container has started, will 
+automatically be seen in the app, instantly.
+
+In order to start the application in local environment you need to have Docker. 
 
 The application can be started with:
 ```
   docker-compose up -d
 ```
 After initializing the containers, the application should be available on [http://localhost:4000/graphql](http://localhost:4000/graphql).
+
+Once you have started the container, you can enter the container via `npm run enter`.
 
 ## Query
 ```

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "debug": "nodemon app.js"
+    "debug": "nodemon app.js",
+    "enter": "docker exec -it rit-vehicle-simulator-api_web_1 /bin/bash"
   },
   "dependencies": {
     "cors": "^2.8.5",

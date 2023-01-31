@@ -9,5 +9,5 @@ export var router = {
     HVAC: (args) => controller.HVAC(args),
     latitude: (args) => controller.latitude(args),
     longitude: (args) => controller.longitude(args),
-    test: () => { return "Hello World!" }
+    test: () => { return "bobobo World!" }
 };
