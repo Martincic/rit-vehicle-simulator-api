@@ -1,6 +1,7 @@
 import mqtt from 'mqtt'
 import dotenv from 'dotenv'
-dotenv.config()
+
+dotenv.config({ path: ".env.dev" })
 
 // Define MQTT Connection options
 const options = {

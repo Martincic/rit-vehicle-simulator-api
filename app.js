@@ -14,11 +14,11 @@ app.use(cors());
 
 // Import config
 import { router } from "./router.js";
-import { schema } from "./schemas/master.js";
+import { masterSchema } from "./schemas/master.js";
 
 // Setup the endpoint
 app.use('/graphql', graphqlHTTP({
-  schema: schema,
+  schema: masterSchema,
   rootValue: router,
   graphiql: true,
 }));

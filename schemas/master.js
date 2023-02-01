@@ -1,13 +1,12 @@
-import {buildSchema} from 'graphql';
+import { GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLString, GraphQLList } from 'graphql';
+import { loginField } from './actions/login.js';
+import { mutationSchema } from './mutation.js';
 
-// Construct a schema, using GraphQL schema language
-export var schema = buildSchema(`
-  type Query {
-    speed(speed: Int): Int,
-    HVAC(status: Boolean): Boolean,
-    stateOfCharge(state: Int): Int,
-    latitude(lat: Float): Float,
-    longitude(lon: Float): Float,
-    test: String
+const rootQuery = new GraphQLObjectType({
+  name: "Query",
+  fields: {
+    loginDrek: loginField
   }
-`);
+});
+
+export var masterSchema = new GraphQLSchema({ query: rootQuery, mutation: mutationSchema})
