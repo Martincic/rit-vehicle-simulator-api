@@ -2,7 +2,13 @@
 import { graphqlHTTP } from 'express-graphql';
 import express from 'express';
 import cors from 'cors';
+import mqttService from "./services/mqttService.js";
 
+// Setup MQTT Listener
+let mqtt = new mqttService();
+mqtt.listen();
+
+// Setup GraphQL API
 var app = express();
 app.use(cors());
 
@@ -16,26 +22,6 @@ app.use('/graphql', graphqlHTTP({
   rootValue: router,
   graphiql: true,
 }));
-
-// import mqtt from 'mqtt'
-// import dotenv from 'dotenv'
-// dotenv.config()
-
-// // Define MQTT Connection options
-// const options = {
-//     host: process.env.HOST,
-//     port: process.env.PORT,
-//     protocol: 'mqtts',
-//     username: process.env.USER,
-//     password: process.env.PASSWORD,
-// }
-// const client = mqtt.connect(options); 
-
-// console.log("Listening for MQTT messages...")
-// client.subscribe('rimacMobileTeam/1')
-// client.on('message', function (topic, message) {
-//     console.log("RECEIVED: " + message)
-// })
 
 // Start the application
 app.listen(4000);

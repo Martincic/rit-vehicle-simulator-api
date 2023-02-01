@@ -10,20 +10,37 @@ const options = {
     username: process.env.RIMACUSER,
     password: process.env.PASSWORD,
 }
-const client = mqtt.connect(options); 
 
 // Export service class
 export default class 
 {
     sendMessage(ID, field, value) 
     {
-        let message = `{"${field}":"${value}"}`;
-        let carID = `rimacWebTeam/${ID}`;
+        const client = mqtt.connect(options); 
+        client.on('connect', function () {
+            console.log("connected...")
+            let message = `{"${field}":"${value}"}`;
+            let carID = `rimacWebTeam/${ID}`;
+    
+            client.publish(carID, message, [{ retain: true}, { qos: 2}]);
+            client.end()
+    
+            console.log(`Message dispatched to car: ${carID}`)
+            console.log(`VALUE: ${message}`)
+        })
+    }
 
-        client.publish(carID, message, [{ retain: true}, { qos: 2}]);
-        client.end()
+    listen(channel) 
+    {
+        const client = mqtt.connect(options); 
+        client.on('connect', function () {
+            client.subscribe('rimacMobileTeam/1')
+        })
 
-        console.log(`Message dispatched to car: ${carID}`)
-        console.log(`VALUE: ${message}`)
+        client.on('message', function (topic, message) {
+            console.log("RECEIVED!")
+            console.log("Topic: "+topic)
+            console.log("Data: "+message)
+        });
     }
 }
