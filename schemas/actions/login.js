@@ -1,14 +1,6 @@
 import { GraphQLString } from "graphql"
 import { UserType } from "../../schemas/objects/user.js"
 import { connection } from "../../services/database.js"
-import rpc from "sync-rpc"
-
-function sleepFor(sleepDuration){
-    var now = new Date().getTime();
-    while(new Date().getTime() < now + sleepDuration){ 
-        /* Do nothing */ 
-    }
-}
 
 export const loginField = {
     type: UserType,
