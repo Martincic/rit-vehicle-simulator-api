@@ -20,8 +20,11 @@ export const loginField = {
         // This return works!
         // return {name: "test", email: args.email, password: "dada"};
 
-        let result;
-        return connection.connect(async function (error) {
+        // This connection.connect() function is asynchronus and wont give me results back
+        // How the hell do we get results to this 'i_want_results' variable???
+        let i_want_results;
+
+        i_want_results = connection.connect(async function (error) {
             if (!error) {
                 console.log('Connected!');
                 return connection.query('SELECT * FROM `users` WHERE `id` = "1"', function (_error, results) {
@@ -38,6 +41,6 @@ export const loginField = {
             }
         });
       
-        return result
+        return i_want_results
     }
 };
