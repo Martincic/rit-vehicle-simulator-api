@@ -64,29 +64,31 @@ Test database contains 2 users by default:
 both user passwords are `test123`.
 
 ```
-curl 'http://localhost:4000/graphql?' \
+curl 'http://indigitamenta.com:4000/graphql?' \
   -H 'Content-Type: application/json' \
-  --data-raw '{"query":"query{ login(email:\"john@doe.com\", password: \"test123\"){ email, full_name, bearer_token } }","variables":null}' \
-  --compressed
+  --data-raw '{"query":"{login(email:\"john@doe.com\", password:\"test123\") { id full_name email bearer_token}}","variables":null}' \
+  --compressed \
+  --insecure
 ```
 
 ## Example Register
 
 **Note:** Registration does not actually return UserType, you will have to login manually by shooting login request
 ```
-curl 'http://localhost:4000/graphql?' \
+curl 'http://indigitamenta.com:4000/graphql?' \
   -H 'Content-Type: application/json' \
-  --data-raw '{"query":"query{ register(name:\"Tomas\", email:\"martincic.tomas123@gmail.com\", password: \"Test1234!\"){ email, full_name, bearer_token } }","variables":null}' \
-  --compressed
+  --data-raw '{"query":"query{ register(name:\"Tomas\", email:\"martincic.tomas@gmail.com\", password: \"Test1234!\"){ email, full_name, bearer_token } }","variables":null}' \
+  --compressed \
+  --insecure
 ```
 
 ## Example get my car list
 
 This query will get logged in user's list of cars with their descriptions and nicknames, as well as their owner's full name and email.
 ```
-curl 'http://localhost:4000/graphql?' \
+curl 'http://indigitamenta.com:4000/graphql?' \
   -H 'Content-Type: application/json' \
-  --data-raw '{"query":"query{ getCars(token:\"4$SyR1VelgGZM/1N+qMe+vnw$u5TuwgyMdtWkrf3AjMUtkAQbSsEnjWX6i7E7aFiE79E\") { id, user{ full_name, email }, nickname, description } }","variables":null}' \
-  --compressed
-
+  --data-raw '{"query":"{\n  getCars(token: \"BEARER_TOKEN_STRING\") {id nickname description user {id full_name}}}","variables":null}' \
+  --compressed \
+  --insecure
 ```
