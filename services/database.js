@@ -22,19 +22,17 @@ export function queryMany(sql) {
 }
 
 export function queryOne(sql) {
-    return new Promise((resolve, reject) => {
-        connection.query( sql , function (_error, results) {
-          if (_error) {
-            console.log(_error);
-            reject(_error);
-          }
-          console.log(results);
-          try {
-            resolve(results[0]);
-          }
-          catch(err) {
-            return null;
-          }
-        });
-      });
+  return new Promise((resolve, reject) => {
+    connection.query( sql , function (_error, results) {
+      if (_error) {
+        console.error(_error);
+        reject(new Error(`Error executing query: ${_error}`));
+      }
+      if (!results || results.length === 0) {
+        reject(new Error(`No results found for query: ${sql}`));
+      }
+      resolve(results[0]);
+    });
+  });
 }
+

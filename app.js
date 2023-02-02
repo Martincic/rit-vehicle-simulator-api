@@ -10,6 +10,8 @@ mqtt.listen();
 
 // Setup GraphQL API
 var app = express();
+
+// Register CORS (allow all), register bearer middleware
 app.use(cors());
 
 // Import config

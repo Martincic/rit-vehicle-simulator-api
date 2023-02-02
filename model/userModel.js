@@ -8,7 +8,6 @@ export default class {
     static async loginUser(email, password) 
     {    
         let sql = `select * from users where email like "${email}";`;// and password like ${password};`;
-        console.log(sql);
         let user = await queryOne(sql);
 
         let match;
@@ -48,6 +47,8 @@ export default class {
     */
     static async generateToken(user) 
     {
+        console.log("GENERATING!");
+
         try {
             const hash = await argon2i.hash(user.password + user.email + Date.now().toString());
             let token = hash.split("=")[4];
@@ -58,5 +59,11 @@ export default class {
             console.log(err);
         }
         return null;
+    }
+
+    static async findBearer(token) {
+        let sql = `select * from users where login_token like "${token}";`;// and password like ${password};`;
+        
+        return await queryOne(sql);
     }
 }
