@@ -13,8 +13,9 @@ CREATE TABLE cars(
 	description VARCHAR(300) NOT NULL
 );
 
-INSERT INTO users(id, full_name, email, password) VALUES(1, "John Doe", "john@doe.com", "test123");
-INSERT INTO users(id, full_name, email, password) VALUES(2, "Ash Ketchup", "ash@mail.com", "p455word");
+ -- These passwords are: test123
+INSERT INTO users(id, full_name, email, password) VALUES(1, "John Doe", "john@doe.com", "$argon2id$v=19$m=65536,t=3,p=4$SORpKUUPF5YZ5IJm1kmSiA$+4K3L1+1UAD9Cqc9f5M6g7iYBPPOE+1LwavP/XK4HCA");
+INSERT INTO users(id, full_name, email, password) VALUES(2, "Ash Ketchup", "ash@mail.com", "$argon2id$v=19$m=65536,t=3,p=4$SORpKUUPF5YZ5IJm1kmSiA$+4K3L1+1UAD9Cqc9f5M6g7iYBPPOE+1LwavP/XK4HCA");
 
 INSERT INTO cars(id, user_id, nickname, description) VALUES(1, 1, "Nevera #1", "My trusty old Nevera");
 INSERT INTO cars(id, user_id, nickname, description) VALUES(2, 1, "Traktor", "My trusty old Traktor");

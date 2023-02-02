@@ -29,7 +29,12 @@ export function queryOne(sql) {
             reject(_error);
           }
           console.log(results);
-          resolve(results[0]);
+          try {
+            resolve(results[0]);
+          }
+          catch(err) {
+            return null;
+          }
         });
       });
 }

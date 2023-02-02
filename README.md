@@ -55,10 +55,16 @@ type CarType {
 ```
 
 ## Example Login
+
+Test database contains 2 users by default:
+  - john@doe.com - 2 cars
+  - ash@ketchup.com - 0 cars
+both user passwords are `test123`.
+
 ```
 curl 'http://localhost:4000/graphql?' \
   -H 'Content-Type: application/json' \
-  --data-raw '{"query":"query{ login(email:\"test123\", password: \"test\"){ email, full_name, bearer_token } }","variables":null}' \
+  --data-raw '{"query":"query{ login(email:\"john@doe.com\", password: \"test123\"){ email, full_name, bearer_token } }","variables":null}' \
   --compressed
 ```
 
