@@ -59,6 +59,7 @@ type CarType {
 Test database contains 2 users by default:
   - john@doe.com - 2 cars
   - ash@ketchup.com - 0 cars
+  
 both user passwords are `test123`.
 
 ```
