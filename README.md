@@ -35,7 +35,8 @@ Once you have started the container, you can enter the container via `npm run en
 ```
 type Query {
     login(email: String, password: String): UserType,
-    register(name: String, email: String, password: String): UserType
+    register(name: String, email: String, password: String): UserType,
+    getCars(token: String): [CarType]
   }
 
 type UserType {
@@ -79,3 +80,13 @@ curl 'http://localhost:4000/graphql?' \
   --compressed
 ```
 
+## Example get my car list
+
+This query will get logged in user's list of cars with their descriptions and nicknames, as well as their owner's full name and email.
+```
+curl 'http://localhost:4000/graphql?' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{"query":"query{ getCars(token:\"4$SyR1VelgGZM/1N+qMe+vnw$u5TuwgyMdtWkrf3AjMUtkAQbSsEnjWX6i7E7aFiE79E\") { id, user{ full_name, email }, nickname, description } }","variables":null}' \
+  --compressed
+
+```
