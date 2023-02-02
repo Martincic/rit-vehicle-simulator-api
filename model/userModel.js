@@ -7,15 +7,39 @@ export default class {
     */
     static async loginUser(email, password) 
     {    
-        let sql = `select * from users where email like ${email} AND password like ${password}`;// and password like ${password};`;
+        let sql = `select * from users where email like "${email}";`;// and password like ${password};`;
+        console.log(sql);
         let user = await queryOne(sql);
 
-        if(user == null) {
+        let match;
+        try {
+            match = await argon2i.verify(user.password, password);
+        } catch (err) {
+            console.log(err);
+        }
+
+        if(user == null || match == false) {
             throw new Error("Invalid credentials!");
         }
-        // user.bearer_token = this.generateToken(user);
-        console.log(user);
+        user.bearer_token = this.generateToken(user);
+
         return user;
+    }
+
+    static async registerUser(name, email, password) 
+    {    
+        let hash;
+        try {
+            hash = await argon2i.hash(password);
+        } catch (err) {
+            console.log(err);
+        }
+        let sql = `INSERT INTO users(full_name, email, password) VALUES ("${name}", "${email}", "${hash}");`;
+        
+        // Create the user in database
+        queryOne(sql);
+
+        return {full_name: name, email: email, password: password};
     }
 
     /*  

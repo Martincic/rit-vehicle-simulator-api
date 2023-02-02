@@ -10,10 +10,6 @@ export const loginField = {
         password: { type: GraphQLString },
     },
     async resolve(parent, args) {
-
-      let password = connection.escape(args.password);
-      let email = connection.escape(args.email);
-      
-      return userModel.loginUser(email, password);
+      return userModel.loginUser(args.email, args.password);
     }
   }

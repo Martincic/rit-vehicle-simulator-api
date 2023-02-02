@@ -34,38 +34,41 @@ Once you have started the container, you can enter the container via `npm run en
 ## Query
 ```
 type Query {
-    HVAC(status: Boolean): Boolean,
-    stateOfCharge(state: Int): Int,
-    longitude(lon: Float): Float,
-    latitude(lat: Float): Float,
-    speed(speed: Int): Int
+    login(email: String, password: String): UserType,
+    register(name: String, email: String, password: String): UserType
   }
+
+type UserType {
+    id: Int
+    full_name: String
+    email: String
+    password: String
+    bearer_token: ?String
+}
+
+type CarType {
+    id: Int 
+    user: UserType 
+    nickname: String 
+    description: String
+}
 ```
 
-## Rules 
-
-Data can be requested from the graph, and in that case it will return only a dummy, random data.
-
-### Example fetch
+## Example Login
 ```
-# Fetch state of charge, latitude and longitude
-curl 'http://indigitamenta.com:4000/graphql?' \
+curl 'http://localhost:4000/graphql?' \
   -H 'Content-Type: application/json' \
-  --data-raw '{"query":"{ stateOfCharge, latitude, longitude }","variables":null}'
+  --data-raw '{"query":"query{ login(email:\"test123\", password: \"test\"){ email, full_name, bearer_token } }","variables":null}' \
+  --compressed
 ```
 
-Data can also be sent to the API, in which case it will publish the new data to the MQTT Broker.
+## Example Register
 
-As of now, it will publish the data to `rimacWebTeam/1` channel. Every bit of data that is uploaded will be sent over in JSON format. If we take a look at the following example upload, it will publish 2 different messages to the MQTT Broker
-
-Sent messages: 
- - `{ "stateOfCharge" : 60 }`
- - `{ "speed" : 87 }`
-
-### Example upload
+**Note:** Registration does not actually return UserType, you will have to login manually by shooting login request
 ```
-# Upload new state of charge and speed values
-curl 'http://indigitamenta.com:4000/graphql?' \
+curl 'http://localhost:4000/graphql?' \
   -H 'Content-Type: application/json' \
-  --data-raw '{"query":"{ stateOfCharge(state: 60), speed(speed: 87) }","variables":null}'
+  --data-raw '{"query":"query{ register(name:\"Tomas\", email:\"martincic.tomas123@gmail.com\", password: \"Test1234!\"){ email, full_name, bearer_token } }","variables":null}' \
+  --compressed
 ```
+

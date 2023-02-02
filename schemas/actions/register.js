@@ -12,9 +12,6 @@ export const registerField = {
     },
     async resolve(parent, args) {
 
-      let password = connection.escape(args.password);
-      let email = connection.escape(args.email);
-      
-      return userModel.registerUser(args.name, email, password);
+      return userModel.registerUser(args.name, args.email, args.password);
     }
   }

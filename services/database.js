@@ -28,6 +28,7 @@ export function queryOne(sql) {
             console.log(_error);
             reject(_error);
           }
+          console.log(results);
           resolve(results[0]);
         });
       });
