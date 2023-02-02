@@ -1,5 +1,10 @@
 {
-  "name": "vehicle-simulator",
+  "name": "rit-vehicle-simulator",
+  "author": {
+    "email": "martincic.tomas@gmail.com",
+    "name": "Tomas Martincic",
+    "url": "https://indigitamenta.com"
+  },
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,6 +14,7 @@
     "enter": "docker exec -it rit-vehicle-simulator-api_web_1 /bin/bash"
   },
   "dependencies": {
+    "argon2": "^0.30.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",

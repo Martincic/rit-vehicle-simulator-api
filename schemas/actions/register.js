@@ -3,9 +3,10 @@ import userModel from "../../model/userModel.js";
 import { UserType } from "../objects/user.js"
 import { connection } from "../../services/database.js"
 
-export const loginField = {
+export const registerField = {
     type: UserType,
     args: {
+        name: { type: GraphQLString },
         email: { type: GraphQLString },
         password: { type: GraphQLString },
     },
@@ -14,6 +15,6 @@ export const loginField = {
       let password = connection.escape(args.password);
       let email = connection.escape(args.email);
       
-      return userModel.loginUser(email, password);
+      return userModel.registerUser(args.name, email, password);
     }
   }

@@ -8,3 +8,27 @@ export const connection = mysql.createConnection({
     password: process.env.DB_PWD,
     database: process.env.DB_DB
 });
+
+export function queryMany(sql) {
+    return new Promise((resolve, reject) => {
+        connection.query( sql , function (_error, results) {
+          if (_error) {
+            console.log(_error);
+            reject(_error);
+          }
+          resolve(results);
+        });
+      });
+}
+
+export function queryOne(sql) {
+    return new Promise((resolve, reject) => {
+        connection.query( sql , function (_error, results) {
+          if (_error) {
+            console.log(_error);
+            reject(_error);
+          }
+          resolve(results[0]);
+        });
+      });
+}

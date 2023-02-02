@@ -1,11 +1,13 @@
 import { GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLString, GraphQLList } from 'graphql';
 import { loginField } from './actions/login.js';
+import { registerField } from './actions/register.js';
 import { mutationSchema } from './mutation.js';
 
 const rootQuery = new GraphQLObjectType({
   name: "Query",
   fields: {
-    loginDrek: loginField
+    login: loginField,
+    register: registerField
   }
 });
 

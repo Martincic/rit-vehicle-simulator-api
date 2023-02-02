@@ -1,11 +1,12 @@
 import { GraphQLString } from "graphql"
 import userModel from "../../model/userModel.js";
-import { UserType } from "../objects/user.js"
+import { UserType } from "../../schemas/objects/user.js"
 import { connection } from "../../services/database.js"
 
 export const loginField = {
     type: UserType,
     args: {
+        name: { type: GraphQLString },
         email: { type: GraphQLString },
         password: { type: GraphQLString },
     },
