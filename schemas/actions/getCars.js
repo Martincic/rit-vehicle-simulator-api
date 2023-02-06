@@ -9,7 +9,13 @@ export const getCars = {
       token: { type: GraphQLNonNull(GraphQLString) },
     },
     async resolve(parent, args) {
-      let user = await userModel.findBearer(args.token);
+      let user;
+      try {
+        user = await userModel.findBearer(args.token);
+      }
+      catch(err) {
+        throw new Error("Invalid token!");
+      }
 
       return await carModel.getCarsForUser(user.id);
     }

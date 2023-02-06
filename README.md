@@ -59,22 +59,24 @@ type UserType {
     full_name: String
     email: String
     password: String
-    bearer_token: ?String
+    bearer_token: String
 }
 
 type CarType {
-    # Internal variables
     id: Int 
     user: UserType 
     nickname: String 
     description: String
+    statistics: CarStatistics
+}
 
-    # Shared variables (via MQTT)
+# These variables are shared/received via MQTT Broker
+type CarStatistics {
     speed(speed: Int): Int,
     HVAC(status: Boolean): Boolean,
     stateOfCharge(state: Int): Int,
     latitude(lat: Float): Float,
-    longitude(lon: Float): Float,
+    longitude(lon: Float): Float
 }
 ```
 

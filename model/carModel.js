@@ -20,7 +20,6 @@ export default class {
 
     static async findById(id, token) {
         let sql = `select * from cars inner join users on cars.user_id = users.id where cars.id = ${id} and users.bearer_token like "${token}";`;
-        
         let car;
         try {
             car = await queryOne(sql);
@@ -28,7 +27,16 @@ export default class {
         catch (error) {
             throw new Error("Invalid token!")
         }
+        return car;
+    }
 
-        return await queryOne(sql);
+    static turnToCar(object) {
+        return {
+            id: object.id,
+            user: object.user_id,
+            nickname: object.nickname,
+            description: object.description,
+            
+        };
     }
 }

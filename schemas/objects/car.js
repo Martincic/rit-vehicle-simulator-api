@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLFloat, GraphQLNonNull } from 'graphql';
 import userModel from '../../model/userModel.js';
+import { CarStatisticType } from './carStats.js';
 import { UserType } from './user.js';
 
 export const CarType = new GraphQLObjectType({
@@ -14,10 +15,17 @@ export const CarType = new GraphQLObjectType({
         },
         nickname: { type: GraphQLString },
         description: { type: GraphQLString },
-        speed: { type: GraphQLInt },
-        hvac: { type: GraphQLBoolean },
-        stateOfCharge: { type: GraphQLInt },
-        latitude: { type: GraphQLFloat },
-        longitude: { type: GraphQLFloat },
+        statistics: { 
+            type: CarStatisticType,
+            resolve(parent, args) {
+                return { 
+                    speed: parent.speed,
+                    hvac: parent.hvac,
+                    stateOfCharge: parent.stateOfCharge,
+                    latitude: parent.latitude,
+                    longitude: parent.longitude,
+                };
+            }
+        }
     })
 });
