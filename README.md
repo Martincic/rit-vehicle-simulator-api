@@ -47,27 +47,57 @@ docker exec -it rit-vehicle-simulator-api_db_1 mysql -uroot -ppassword
 
 ## Query
 ```
+
+# Query and Mutation
+
 type Query {
-    login(email: String, password: String): UserType,
-    register(name: String, email: String, password: String): UserType,
-    getCars(token: String): [CarType],
-    getCar(token: String, carId: Int): CarType
-  }
+  login(input: LoginInput): User
+  register(name: String!input: LoginInput): User
+  getCars(token: String!): [Car]
+  getCar(carId: Int!token: String!): Car
+}
+
+type Mutation {
+  updateCar(id: input: CarInput): Car
+}
+
+# Inputs
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input CarInput {
+  nickname: String
+  description: String
+  statistics: StatisticInputType
+}
+
+input StatisticInputType {
+    speed: Int,
+    HVAC: Boolean,
+    stateOfCharge: Int,
+    latitude: Float,
+    longitude: Float
+}
+
+# Types
 
 type UserType {
-    id: Int
-    full_name: String
-    email: String
-    password: String
-    bearer_token: String
+  id: Int
+  full_name: String
+  email: String
+  password: String
+  bearer_token: String
 }
 
 type CarType {
-    id: Int 
-    user: UserType 
-    nickname: String 
-    description: String
-    statistics: CarStatistics
+  id: Int!
+  user: User!
+  nickname: String
+  description: String
+  statistics: CarStatistics
 }
 
 # These variables are shared/received via MQTT Broker
