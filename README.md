@@ -50,7 +50,8 @@ docker exec -it rit-vehicle-simulator-api_db_1 mysql -uroot -ppassword
 type Query {
     login(email: String, password: String): UserType,
     register(name: String, email: String, password: String): UserType,
-    getCars(token: String): [CarType]
+    getCars(token: String): [CarType],
+    getCar(token: String, carId: Int): CarType
   }
 
 type UserType {

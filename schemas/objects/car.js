@@ -1,13 +1,13 @@
-import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLFloat } from 'graphql';
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLFloat, GraphQLNonNull } from 'graphql';
 import userModel from '../../model/userModel.js';
 import { UserType } from './user.js';
 
 export const CarType = new GraphQLObjectType({
     name: "Car",
     fields: () => ({
-        id: { type: GraphQLInt },
+        id: { type: GraphQLNonNull(GraphQLInt) },
         user: { 
-            type: UserType,
+            type: GraphQLNonNull(UserType),
             async resolve(parent, args) {
               return await userModel.findById(parent.user_id);
             }
