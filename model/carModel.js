@@ -12,7 +12,6 @@ export default class {
         if(cars == null) {
             throw new Error("No cars found for user!");
         }
-
         return cars;
     }
 }

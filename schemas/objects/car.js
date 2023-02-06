@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLInt, GraphQLString } from 'graphql';
+import { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLBoolean, GraphQLFloat } from 'graphql';
 import userModel from '../../model/userModel.js';
 import { UserType } from './user.js';
 
@@ -9,10 +9,15 @@ export const CarType = new GraphQLObjectType({
         user: { 
             type: UserType,
             async resolve(parent, args) {
-              return await userModel.findById(parent.id);
+              return await userModel.findById(parent.user_id);
             }
         },
         nickname: { type: GraphQLString },
-        description: { type: GraphQLString }
+        description: { type: GraphQLString },
+        speed: { type: GraphQLInt },
+        hvac: { type: GraphQLBoolean },
+        stateOfCharge: { type: GraphQLInt },
+        latitude: { type: GraphQLFloat },
+        longitude: { type: GraphQLFloat },
     })
 });

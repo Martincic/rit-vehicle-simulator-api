@@ -62,10 +62,18 @@ type UserType {
 }
 
 type CarType {
+    # Internal variables
     id: Int 
     user: UserType 
     nickname: String 
     description: String
+
+    # Shared variables (via MQTT)
+    speed(speed: Int): Int,
+    HVAC(status: Boolean): Boolean,
+    stateOfCharge(state: Int): Int,
+    latitude(lat: Float): Float,
+    longitude(lon: Float): Float,
 }
 ```
 
