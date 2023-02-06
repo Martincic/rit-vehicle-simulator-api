@@ -52,9 +52,9 @@ docker exec -it rit-vehicle-simulator-api_db_1 mysql -uroot -ppassword
 
 type Query {
   login(input: LoginInput): User
-  register(name: String!input: LoginInput): User
+  register(name: String! input: LoginInput): User
   getCars(token: String!): [Car]
-  getCar(carId: Int!token: String!): Car
+  getCar(carId: Int! token: String!): Car
 }
 
 type Mutation {
