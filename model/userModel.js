@@ -43,7 +43,6 @@ export default class {
         await queryOne(sql);
 
         let user = await this.findBearer(token);
-        console.log("USER:",user);
         return user;
     }
 
@@ -53,7 +52,6 @@ export default class {
     */
     static async generateToken(user) 
     {
-        console.log("GENERATING!");
 
         try {
             const hash = await argon2i.hash(user.password + user.email + Date.now().toString());

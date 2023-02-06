@@ -72,11 +72,11 @@ type CarType {
 
 # These variables are shared/received via MQTT Broker
 type CarStatistics {
-    speed(speed: Int): Int,
-    HVAC(status: Boolean): Boolean,
-    stateOfCharge(state: Int): Int,
-    latitude(lat: Float): Float,
-    longitude(lon: Float): Float
+    speed: Int,
+    HVAC: Boolean,
+    stateOfCharge: Int,
+    latitude: Float,
+    longitude: Float
 }
 ```
 

@@ -21,29 +21,29 @@ export const readme = `
 #
 # An example Register query:
 #
-#   query{
-#       register(name:"Alex", email:"test@mail.com", password:"Test123!") {
-#         id, full_name, bearer_token
-#       }
-#     }
+   query Register{
+       register(name:"Alex", input:{email:"alex@mail.com", password:"Test123!"}) {
+         id, full_name, bearer_token
+       }
+     }
 #
 # An example Login query 
 #
 # NOTE: john@doe.com is the test user which has 2 test cars
 # password: test123
 #
-#   query{
-#       login(email:"john@doe.com", password:"test123") {
-#         id, full_name, bearer_token
-#       }
-#     }  
+   query Login{
+       login(input:{email:"john@doe.com", password:"test123"}) {
+         id, full_name, bearer_token, email
+       }
+     }  
 #
 # An example getCars query 
-#   query{
-#       getCars(token:"4$ioKGNJ1U11dJCQcWbnPbYg$/kWfHuuA4vI0h2jb9MMS9U7PTjHkzt8JqvHb9l4xqFU"){
-#         id, nickname, description, 
-#         statistics { speed, stateOfCharge, hvac }, 
-#         user { id, full_name }
-#       }
-#     }
+   query getAllUsercars{
+       getCars(token:"4$ioKGNJ1U11dJCQcWbnPbYg$/kWfHuuA4vI0h2jb9MMS9U7PTjHkzt8JqvHb9l4xqFU"){
+         id, nickname, description, 
+         statistics { speed, stateOfCharge, hvac }, 
+         user { id, full_name }
+       }
+     }
 `;

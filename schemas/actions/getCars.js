@@ -14,6 +14,7 @@ export const getCars = {
         user = await userModel.findBearer(args.token);
       }
       catch(err) {
+        console.log(err);
         throw new Error("Invalid token!");
       }
 
