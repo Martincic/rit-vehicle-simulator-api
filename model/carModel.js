@@ -1,9 +1,6 @@
-import { queryMany } from "../services/database.js"
+import { queryMany, queryOne } from "../services/database.js"
 export default class {
 
-    /*  
-        Login the user, create bearer token and persist the token
-    */
     static async getCarsForUser(userId) 
     {    
         let sql = `select * from cars where user_id like "${userId}";`;
@@ -13,5 +10,11 @@ export default class {
             throw new Error("No cars found for user!");
         }
         return cars;
+    }
+
+    static async findById(id) {
+        let sql = `select * from cars where id like "${id}";`;
+        
+        return await queryOne(sql);
     }
 }
