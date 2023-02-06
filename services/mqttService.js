@@ -15,7 +15,7 @@ const options = {
 // Export service class
 export default class 
 {
-    sendMessage(ID, field, value) 
+    static sendMessage(ID, field, value) 
     {
         const client = mqtt.connect(options); 
         client.on('connect', function () {
