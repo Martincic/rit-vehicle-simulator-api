@@ -16,7 +16,7 @@ reboot application
 
 *NOTE:* Action will run only if the commit message contains text `deploy`.
 
-## Local Development 
+## Local Development - Docker
 The environment is setup with nodemon and is sharing volume with current directory. 
 This means that any changes you create in project, after the container has started, will 
 automatically be seen in the app, instantly.
@@ -29,7 +29,21 @@ The application can be started with:
 ```
 After initializing the containers, the application should be available on [http://localhost:4000/graphql](http://localhost:4000/graphql).
 
-Once you have started the container, you can enter the container via `npm run enter`.
+
+Logs from the application:
+```
+docker logs rit-vehicle-simulator-api_web_1
+```
+
+Enter the application container:
+```
+docker exec -it rit-vehicle-simulator-api_web_1 /bin/bash
+```
+
+Enter the database: 
+```
+docker exec -it rit-vehicle-simulator-api_db_1 mysql -uroot -ppassword
+```
 
 ## Query
 ```
