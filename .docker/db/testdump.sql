@@ -3,7 +3,7 @@ CREATE TABLE users(
 	full_name VARCHAR(60) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	password VARCHAR(200) NOT NULL,
-	login_token VARCHAR(300) DEFAULT NULL
+	bearer_token VARCHAR(300) DEFAULT NULL
 );
 
 CREATE TABLE cars(

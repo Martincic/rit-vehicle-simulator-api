@@ -12,6 +12,6 @@ export const registerField = {
     },
     async resolve(parent, args) {
 
-      return userModel.registerUser(args.name, args.email, args.password);
+      return await userModel.registerUser(args.name, args.email, args.password);
     }
   }

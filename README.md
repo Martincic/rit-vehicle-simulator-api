@@ -87,7 +87,6 @@ curl 'http://indigitamenta.com:4000/graphql?' \
 
 ## Example Register
 
-**Note:** Registration does not actually return UserType, you will have to login manually by shooting login request
 ```
 curl 'http://indigitamenta.com:4000/graphql?' \
   -H 'Content-Type: application/json' \
