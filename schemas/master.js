@@ -7,6 +7,7 @@ import { mutationSchema } from './mutation.js';
 
 const rootQuery = new GraphQLObjectType({
   name: "Query",
+  description: "Used to perform GET operations.",
   fields: {
     login: loginField,
     register: registerField,

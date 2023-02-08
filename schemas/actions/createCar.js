@@ -22,4 +22,3 @@ export const createCar = {
     return await carModel.createCar(args, user.id);
   }
 }
-// NEMOGU NAC ENDPOINT CREATE CAR ??

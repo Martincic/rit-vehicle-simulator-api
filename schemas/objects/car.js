@@ -5,6 +5,7 @@ import { UserType } from './user.js';
 
 export const CarType = new GraphQLObjectType({
     name: "Car",
+    description:"Car object which belongs to some user.",
     fields: () => ({
         id: { type: GraphQLNonNull(GraphQLInt) },
         user: { 

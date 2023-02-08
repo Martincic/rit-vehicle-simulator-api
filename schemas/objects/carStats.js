@@ -2,6 +2,7 @@ import { GraphQLObjectType, GraphQLInt, GraphQLBoolean, GraphQLFloat } from 'gra
 
 export const CarStatisticType = new GraphQLObjectType({
     name: "CarStatistics",
+    description:"These fields can be updated at any moment via MQTT so refresh them continiously on the screen in order to have 'live' feed.",
     fields: () => ({
         speed: { 
             type: GraphQLInt,

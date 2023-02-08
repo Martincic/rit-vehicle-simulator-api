@@ -5,6 +5,7 @@ import { updateCar } from './actions/updateCar.js';
 
 export const mutationSchema = new GraphQLObjectType({
   name: "Mutation",
+  description: "Used to perform modification and update operations.",
   fields: {
     updateCar: updateCar,
     createCar: createCar,
