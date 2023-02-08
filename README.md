@@ -113,6 +113,8 @@ type CarStatistics {
     longitude: Float
 }
 ```
+![Schema of this graph](schema.png)
+
 
 ## Example Login
 
