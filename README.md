@@ -54,11 +54,11 @@ type Query {
   login(input: LoginInput): User
   register(name: String! input: LoginInput): User
   getCars(token: String!): [Car]
-  getCar(carId: Int! token: String!): Car
+  getCar(carId: Int! token: String!): CarType
 }
 
 type Mutation {
-  updateCar(id: input: CarInput): Car
+  updateCar(id: Int!, token: String!, input: CarInput): CarType
 }
 
 # Inputs
@@ -74,6 +74,7 @@ input CarInput {
   statistics: StatisticInputType
 }
 
+# Any updated values will be published to MQTT Broker
 input StatisticInputType {
     speed: Int,
     HVAC: Boolean,
@@ -100,7 +101,8 @@ type CarType {
   statistics: CarStatistics
 }
 
-# These variables are shared/received via MQTT Broker
+# This data can be changed at any moment via MQTT
+# it is important to refresh this continuously
 type CarStatistics {
     speed: Int,
     HVAC: Boolean,

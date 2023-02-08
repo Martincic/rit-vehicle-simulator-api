@@ -46,4 +46,26 @@ export const readme = `
          user { id, full_name }
        }
      }
+#
+# An example update query - updates car by ID 3, must be owned by user who's bearer token 
+# is supplied. Updates nick, desc, and statistics
+# NOTE: Any statistics updated will be published to MQTT
+     mutation UpdateMyCar {
+      updateCar(
+       token:"4$FiaHHNSq/RXhESkZqxO54g$1Aj+l5rMYXGwIY27BjgFKQ6wcI7pmGNsGECS2AO80Z0"
+       id: 3
+       input:{
+         nickname:"Prikolica"
+         description:"Prikolica za peljat driva po sumberi"
+         statistics:{
+           speed: 99,
+           longitude: 14.23141
+           stateOfCharge: 73
+           hvac: false
+         }
+       }
+     ){
+       nickname, description, statistics{speed, hvac, stateOfCharge}
+     } 
+   }
 `;

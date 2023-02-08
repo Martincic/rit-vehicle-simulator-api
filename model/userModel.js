@@ -66,7 +66,7 @@ export default class {
     }
 
     static async findBearer(token) {
-        let sql = `select * from users where bearer_token like "${token}";`;
+        let sql = `SELECT * FROM users WHERE bearer_token LIKE "${token}";`;
         
         return await queryOne(sql); 
     }

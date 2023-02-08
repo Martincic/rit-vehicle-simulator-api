@@ -1,4 +1,6 @@
 import { queryMany, queryOne } from "../services/database.js"
+import mqttService from "../services/mqttService.js";
+
 export default class {
 
     static async getCarsForUser(userId) 
@@ -16,6 +18,48 @@ export default class {
             throw new Error("No cars found for user!");
         }
         return cars;
+    }
+
+    static async updateCar(id, input, userId) 
+    {    
+        let hvac;
+        if(input.statistics.hvac) hvac = 1;
+        else hvac = 0;
+
+        let sql = `UPDATE cars SET 
+            nickname = COALESCE(NULLIF('${input.nickname}', 'undefined'), nickname),
+            description = COALESCE(NULLIF('${input.description}', 'undefined'), description),
+            speed = COALESCE(NULLIF('${input.statistics.speed}', 'undefined'), speed),
+            hvac = COALESCE(NULLIF('${hvac}', 'undefined'), hvac),
+            stateOfCharge = COALESCE(NULLIF('${input.statistics.stateOfCharge}', 'undefined'), stateOfCharge),
+            latitude = COALESCE(NULLIF('${input.statistics.latitude}', 'undefined'), latitude),
+            longitude = COALESCE(NULLIF('${input.statistics.longitude}', 'undefined'), longitude)
+            
+            WHERE id = ${id};`;
+
+        let car;
+        try {
+            await queryOne(sql);
+            
+            if(Object.prototype.hasOwnProperty.call(input, 'statistics')){
+                console.log("I am publishing statistics to MQTT!");
+
+                for (var prop in input.statistics) {
+                    if (Object.prototype.hasOwnProperty.call(input.statistics, prop)) {
+
+                        mqttService.sendMessage(1, prop, input.statistics[prop]);
+                    }
+                }            
+            }
+
+            car = await queryOne(`select * from cars where id = ${id};`);
+        }
+        catch (error) {
+            console.log(error)
+            throw new Error("Car not found!")
+        }
+
+        return car;
     }
 
     static async findById(id, token) {
