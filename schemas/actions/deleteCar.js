@@ -1,28 +1,25 @@
-import { GraphQLInt, GraphQLString } from "graphql"
+import { GraphQLBoolean, GraphQLInt, GraphQLString } from "graphql"
 import carModel from "../../model/carModel.js";
-import { CarType } from "../objects/car.js"
-import { CarInputType } from "../inputs/carInput.js";
 import userModel from "../../model/userModel.js";
 
-export const updateCar = {
-  type: CarType,
+export const deleteCar = {
+  type: GraphQLBoolean,
   args: {
-      id: { type: GraphQLInt },
       token: { type: GraphQLString },
-      input: { type: CarInputType },
+      id: { type: GraphQLInt },
   },
   async resolve(parent, args) {
     let user;
-    try{
+    try {
       user = await userModel.findBearer(args.token);
     }
-    catch(err) { throw new Error("Invalid bearer!") }
+    catch(err) { throw new Error("Invalid token!") }
 
     try{
       await userModel.checkIfUserOwnsCar(user.id, args.id);
     }
     catch(err) { throw new Error("You do not own this vehicle!") }
 
-    return await carModel.updateCar(args.id, args.input)
+    return await carModel.deleteCar(args.id);
   }
 }

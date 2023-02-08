@@ -1,7 +1,6 @@
 import { GraphQLBoolean, GraphQLString } from "graphql"
 import carModel from "../../model/carModel.js";
 import userModel from "../../model/userModel.js";
-import { CarType } from "../objects/car.js"
 
 export const createCar = {
   type: GraphQLBoolean,
@@ -11,7 +10,15 @@ export const createCar = {
       description: { type: GraphQLString },
   },
   async resolve(parent, args) {
-    let user = await userModel.findBearer(args.token);
+    let user;
+    try {
+      user = await userModel.findBearer(args.token);
+      if(!user) throw new Error()
+    }
+    catch(err) {
+      throw new Error("Invalid token!")
+    }
+
     return await carModel.createCar(args, user.id);
   }
 }

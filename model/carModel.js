@@ -31,6 +31,17 @@ export default class {
         return true;
     }
 
+    static async deleteCar(id) {
+        let sql = `DELETE FROM cars WHERE id = ${id};`;
+        
+        try{
+            await queryOne(sql)
+        }
+        catch(err) { return false; }
+
+        return true;
+    }
+
     static async updateCar(id, input, userId) 
     {    
         let hvac;

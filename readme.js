@@ -68,4 +68,12 @@ export const readme = `
        nickname, description, statistics{speed, hvac, stateOfCharge}
      } 
    }
+
+#
+# An example create a car for user
+# Note: all statistics are 0 or null by default, 
+# also all cars are in idle/shutdown state once created
+  mutation CreateCarForMe {
+    createCar(token:"4$FiaHHNSq/RXhESkZqxO54g$1Aj+l5rMYXGwIY27BjgFKQ6wcI7pmGNsGECS2AO80Z0", nickname:"Prikolica #22", description:"Moja luda prikolica 123")
+  }
 `;

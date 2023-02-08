@@ -46,6 +46,12 @@ export default class {
         return user;
     }
 
+    static async checkIfUserOwnsCar(userId, carId) {
+        let sql = `SELECT * FROM cars INNER JOIN users ON cars.user_id = users.id WHERE users.id = ${userId} AND cars.id = ${carId};`;
+
+        await queryOne(sql);
+    }
+
     /*  
         Create bearer token based on user's unique attributes + timestamp
         Update the user in database with new token, return only
