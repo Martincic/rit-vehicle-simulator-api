@@ -20,6 +20,17 @@ export default class {
         return cars;
     }
 
+    static async createCar(input, userId) {
+        let sql = `INSERT INTO cars(user_id, nickname, description) VALUES(${userId}, "${input.nickname}", "${input.description}");`
+        
+        try{
+            await queryOne(sql)
+        }
+        catch(err) { return false; }
+
+        return true;
+    }
+
     static async updateCar(id, input, userId) 
     {    
         let hvac;

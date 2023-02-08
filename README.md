@@ -58,7 +58,9 @@ type Query {
 }
 
 type Mutation {
-  updateCar(id: Int!, token: String!, input: CarInput): CarType
+  createCar(token: String!, nickname: String!, description: String!): CarType
+  updateCar(id: Int!, token: String!, input: CarInput): Boolean
+  deleteCar(id: Int!, token: String!): Boolean
 }
 
 # Inputs
