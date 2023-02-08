@@ -22,7 +22,12 @@ export const readme = `
 # An example Register query:
 #
    query Register{
-       register(name:"Alex", input:{email:"alex@mail.com", password:"Test123!"}) {
+       register(
+        name:"Alex", 
+        input:{
+          email:"alex@mail.com", 
+          password:"Test123!"
+        }) {
          id, full_name, bearer_token
        }
      }
@@ -33,7 +38,11 @@ export const readme = `
 # password: test123
 #
    query Login{
-       login(input:{email:"john@doe.com", password:"test123"}) {
+       login(
+        input:{
+          email:"john@doe.com", 
+          password:"test123"
+        }) {
          id, full_name, bearer_token, email
        }
      }  
@@ -57,7 +66,7 @@ export const readme = `
        input:{
          nickname:"Prikolica"
          description:"Prikolica za peljat driva po sumberi"
-         statistics:{
+         statistics:{ 
            speed: 99,
            longitude: 14.23141
            stateOfCharge: 73
@@ -74,6 +83,10 @@ export const readme = `
 # Note: all statistics are 0 or null by default, 
 # also all cars are in idle/shutdown state once created
   mutation CreateCarForMe {
-    createCar(token:"4$FiaHHNSq/RXhESkZqxO54g$1Aj+l5rMYXGwIY27BjgFKQ6wcI7pmGNsGECS2AO80Z0", nickname:"Prikolica #22", description:"Moja luda prikolica 123")
+    createCar(
+      token:"4$FiaHHNSq/RXhESkZqxO54g$1Aj+l5rMYXGwIY27BjgFKQ6wcI7pmGNsGECS2AO80Z0"
+      nickname:"Prikolica #22"
+      description:"Moja luda prikolica 123"
+    )
   }
 `;
