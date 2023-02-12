@@ -42,11 +42,11 @@ export default class {
         return true;
     }
 
-    static async updateCar(id, input, mqtt) 
+    static async updateCar(id, input, mqtt, skip) 
     {    
         let hvac;
-        if(input.statistics.hvac) hvac = 1;
-        else hvac = 0;
+        if(input.statistics.hvac) hvac = input.statistics.hvac;
+        else hvac = undefined;
 
         let sql = `UPDATE cars SET 
             nickname = COALESCE(NULLIF('${input.nickname}', 'undefined'), nickname),
@@ -62,7 +62,7 @@ export default class {
         let car;
         try {
             await queryOne(sql);
-            
+            if(skip) return;
             if(Object.prototype.hasOwnProperty.call(input, 'statistics')){
                 console.log("I am publishing statistics to MQTT!");
 

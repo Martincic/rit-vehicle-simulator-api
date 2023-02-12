@@ -1,5 +1,6 @@
 
 import dotenv from 'dotenv'
+import carModel from '../model/carModel.js';
 dotenv.config({ path: ".env.dev" })
 
 // Export service class
@@ -14,9 +15,12 @@ export default class
             client.publish(process.env.MQTT_PUBLISH+ID, "Error! Invalid command sent, supported commands are: ['speed', 'hvac', 'stateOfCharge', 'latitude', 'longitude']")
             return
         }
+        
+        let input = JSON.parse("{\""+command.command+"\":\""+command.value+"\"}");
+        carModel.updateCar(ID, {statistics: input}, this, true);
 
-        console.log("VALID: ", command.command)
-        console.log("id: ", ID)
+        let response = JSON.stringify({"command":command.command, "value":command.value});
+        client.publish(process.env.MQTT_PUBLISH+ID, response);
     }
 
     // { command: 'speed', value: '155' }
