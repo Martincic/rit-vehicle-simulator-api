@@ -68,6 +68,7 @@ export default class {
 
                 for (var prop in input.statistics) {
                     if (Object.prototype.hasOwnProperty.call(input.statistics, prop)) {
+                        console.log("I am publishing statistics to MQTT!");
 
                         mqttService.sendMessage(1, prop, input.statistics[prop]);
                     }

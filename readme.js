@@ -77,7 +77,6 @@ export const readme = `
        nickname, description, statistics{speed, hvac, stateOfCharge}
      } 
    }
-
 #
 # An example create a car for user
 # Note: all statistics are 0 or null by default, 

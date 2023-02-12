@@ -15,14 +15,12 @@ var app = express();
 app.use(cors());
 
 // Import config
-import { router } from "./router.js";
 import { masterSchema } from "./schemas/master.js";
 import { readme } from './readme.js';
 
 // Setup the endpoint
 app.use('/graphql', graphqlHTTP({
   schema: masterSchema,
-  rootValue: router,
   graphiql: {
     editorTheme: 'solarized light',
     defaultQuery: readme

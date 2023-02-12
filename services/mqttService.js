@@ -18,24 +18,25 @@ export default class
     static sendMessage(ID, field, value) 
     {
         const client = mqtt.connect(options); 
-        client.on('connect', function () {
-            console.log("connected...")
-            let message = `{"${field}":"${value}"}`;
-            let carID = `rimacWebTeam/${ID}`;
     
-            client.publish(carID, message, [{ retain: true}, { qos: 2}]);
-            client.end()
+        let message = `{"${field}":"${value}"}`;
+        let carID = `rimacVehicle/${ID}`;
+        client.publish(carID, message, [{ retain: true}, { qos: 2}]);
+        client.end()
     
-            console.log(`Message dispatched to car: ${carID}`)
-            console.log(`VALUE: ${message}`)
-        })
+        console.log(`Message dispatched to car: ${carID}`)
+        console.log(`VALUE: ${message}`)
     }
 
-    listen(channel) 
+    /*
+     *  This method will connect to MQTT broker and start listening   
+     *  on a new channel for every car that we have in the database
+     */
+    listen() 
     {
         const client = mqtt.connect(options); 
         client.on('connect', function () {
-            client.subscribe('rimacMobileTeam/1')
+            client.subscribe('rimacVehicle/1')
         })
 
         client.on('message', function (topic, message) {
