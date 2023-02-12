@@ -1,5 +1,6 @@
 import mqtt from 'mqtt'
 import dotenv from 'dotenv'
+import mqttResolver from './mqttResolver.js';
 
 dotenv.config({ path: ".env.dev" })
 
@@ -12,39 +13,54 @@ const options = {
     password: process.env.PASSWORD,
 }
 
+// Setup topics
+const publishTopic = process.env.MQTT_PUBLISH;
+const subscribeTopic = process.env.MQTT_SUBSCRIBE
+
+// Format of broadcast messages
+const messageFormat = (field, value) => {
+    return `{"${field}":"${value}"}`;
+}
+
 // Export service class
 export default class 
 {
-    sendMessage(ID, field, value) 
+    /*
+     *  Publish updated status of specific vehicle to MQTT broker   
+     */ 
+    broadcastUpdate(ID, field, value) 
     {
-        console.log("STATUS: ", this.client.connected)
-        let message = `{"${field}":"${value}"}`;
-        let carID = `rimacVehicle/${ID}`;
-        this.client.publish(carID, message, [{ retain: true}, { qos: 2}]);
-    
-        console.log(`Message dispatched to car: ${carID}`)
-        console.log(`VALUE: ${message}`)
+        const message = messageFormat(field, value)
+        const topic = publishTopic+ID
 
+        this.client.publish(topic, message, [{ retain: true}, { qos: 2}]);
+    
+        console.log(`Message dispatched to car: ${topic}`)
+        console.log(`VALUE: ${message}`) 
     }
 
     /*
      *  This method will connect to MQTT broker and start listening   
-     *  on a new channel for every car that we have in the database
-     */
+     *  on a new topic for every car that we have in the database
+     */ 
     listen() 
     {
         this.client = mqtt.connect(options); 
         this.client.on('connect', function () {
             console.log("Connected!")
-
-            // TODO: Make this dynamic 
-            this.subscribe('rimacVehicle/1')
-            this.subscribe('rimacVehicle/2')
-            this.subscribe('rimacVehicle/3')
+            // TODO: refactor this to register all existing cars id's in the db 
+            // Register cars
+            for (let i = 0; i < 100; i++) {
+                this.subscribe(subscribeTopic+i);   
+            }
         })
 
+        //Will receive commands in the following format:
+        // Topic: rimacVehicleWeb/{CarID}
+        // Data: {"command":"nekaCommanda", "value":"value"}
         this.client.on('message', function (topic, message) {
-            console.log("RECEIVED!")
+            const carID = topic.split('/')[1];
+            mqttResolver.resolve(carID, message, this, topic)
         });
     }
 }
