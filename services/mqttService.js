@@ -15,17 +15,16 @@ const options = {
 // Export service class
 export default class 
 {
-    static sendMessage(ID, field, value) 
+    sendMessage(ID, field, value) 
     {
-        const client = mqtt.connect(options); 
-    
+        console.log("STATUS: ", this.client.connected)
         let message = `{"${field}":"${value}"}`;
         let carID = `rimacVehicle/${ID}`;
-        client.publish(carID, message, [{ retain: true}, { qos: 2}]);
-        client.end()
+        this.client.publish(carID, message, [{ retain: true}, { qos: 2}]);
     
         console.log(`Message dispatched to car: ${carID}`)
         console.log(`VALUE: ${message}`)
+
     }
 
     /*
@@ -34,15 +33,18 @@ export default class
      */
     listen() 
     {
-        const client = mqtt.connect(options); 
-        client.on('connect', function () {
-            client.subscribe('rimacVehicle/1')
+        this.client = mqtt.connect(options); 
+        this.client.on('connect', function () {
+            console.log("Connected!")
+
+            // TODO: Make this dynamic 
+            this.subscribe('rimacVehicle/1')
+            this.subscribe('rimacVehicle/2')
+            this.subscribe('rimacVehicle/3')
         })
 
-        client.on('message', function (topic, message) {
+        this.client.on('message', function (topic, message) {
             console.log("RECEIVED!")
-            console.log("Topic: "+topic)
-            console.log("Data: "+message)
         });
     }
 }

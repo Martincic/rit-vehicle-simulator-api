@@ -42,7 +42,7 @@ export default class {
         return true;
     }
 
-    static async updateCar(id, input, userId) 
+    static async updateCar(id, input, mqtt) 
     {    
         let hvac;
         if(input.statistics.hvac) hvac = 1;
@@ -70,7 +70,7 @@ export default class {
                     if (Object.prototype.hasOwnProperty.call(input.statistics, prop)) {
                         console.log("I am publishing statistics to MQTT!");
 
-                        mqttService.sendMessage(1, prop, input.statistics[prop]);
+                        mqtt.sendMessage(id, prop, input.statistics[prop]);
                     }
                 }            
             }

@@ -20,13 +20,13 @@ import { readme } from './readme.js';
 
 // Setup the endpoint
 app.use('/graphql', graphqlHTTP({
-  schema: masterSchema,
+  schema: masterSchema(mqtt),
   graphiql: {
     editorTheme: 'solarized light',
     defaultQuery: readme
   }
 }));
-
+ 
 // Start the application
 app.listen(4000);
 console.log('Running a GraphQL API server at http://localhost:4000/graphql');
