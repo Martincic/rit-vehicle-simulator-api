@@ -6,7 +6,7 @@ dotenv.config({ path: ".env.dev" })
 // Export service class
 export default class 
 {
-    static resolve(ID, message, client) 
+    static async resolve(ID, message, client) 
     {
         let command = this.parseMessage(message, client, ID);
         console.log("resolving again!")
@@ -17,9 +17,23 @@ export default class
         }
         
         let input = JSON.parse("{\""+command.command+"\":\""+command.value+"\"}");
-        carModel.updateCar(ID, {statistics: input}, this, true);
-
-        let response = JSON.stringify({"command":command.command, "value":command.value});
+        try {
+            await carModel.updateCar(ID, {statistics: input}, this, true);
+        }
+        catch(err) {
+            client.publish(process.env.MQTT_PUBLISH+ID, "ER_TRUNCATED_WRONG_VALUE_FOR_FIELD:");
+        }
+        
+        let car;
+        try{
+            car = await carModel.findId(ID);            
+        }
+        catch(err){
+            client.publish(process.env.MQTT_PUBLISH+ID, "Error! Car not found!");
+            return
+        }
+        console.log("CAR", command.command);
+        let response = JSON.stringify({"command":command.command, "value":car[command.command]});
         client.publish(process.env.MQTT_PUBLISH+ID, response);
     }
 

@@ -58,9 +58,9 @@ export default class
         //Will receive commands in the following format:
         // Topic: rimacVehicleWeb/{CarID}
         // Data: {"command":"nekaCommanda", "value":"value"}
-        this.client.on('message', function (topic, message) {
+        this.client.on('message', async function (topic, message) {
             const carID = topic.split('/')[1];
-            mqttResolver.resolve(carID, message, this, topic)
+            await mqttResolver.resolve(carID, message, this, topic)
         });
     }
 }

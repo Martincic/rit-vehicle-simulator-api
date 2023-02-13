@@ -62,7 +62,6 @@ export default class {
         let car;
         try {
             await queryOne(sql);
-            if(skip) return;
             if(Object.prototype.hasOwnProperty.call(input, 'statistics')){
                 console.log("I am publishing statistics to MQTT!");
 
@@ -70,7 +69,9 @@ export default class {
                     if (Object.prototype.hasOwnProperty.call(input.statistics, prop)) {
                         console.log("I am publishing statistics to MQTT!");
 
-                        mqtt.broadcastUpdate(id, prop, input.statistics[prop]);
+                        if(!skip) {
+                            mqtt.broadcastUpdate(id, prop, input.statistics[prop]);
+                        }
                     }
                 }            
             }
@@ -78,11 +79,15 @@ export default class {
             car = await queryOne(`select * from cars where id = ${id};`);
         }
         catch (error) {
-            console.log(error)
-            throw new Error("Car not found!")
+            return error
         }
 
         return car;
+    }
+
+    static async findId(id) {
+        let sql = `select * from cars where id = ${id};`;
+        return await queryOne(sql);
     }
 
     static async findById(id, token) {
