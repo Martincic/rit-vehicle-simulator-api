@@ -45,8 +45,9 @@ export default class {
     static async updateCar(id, input, mqtt, skip) 
     {    
         let hvac;
-        if(input.statistics.hvac) hvac = input.statistics.hvac;
-        else hvac = undefined;
+        if(input.statistics.hvac == true) hvac = 1;
+        else if(input.statistics.hvac == false) hvac = 0;
+        else hvac = undefined; 
 
         let sql = `UPDATE cars SET 
             nickname = COALESCE(NULLIF('${input.nickname}', 'undefined'), nickname),
