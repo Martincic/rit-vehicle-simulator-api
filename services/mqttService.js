@@ -19,7 +19,7 @@ const subscribeTopic = process.env.MQTT_SUBSCRIBE
 
 // Format of broadcast messages
 const messageFormat = (field, data) => {
-    $message = {
+    let $message = {
         command: field,
         value: data
     };
