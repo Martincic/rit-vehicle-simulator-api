@@ -18,8 +18,9 @@ const publishTopic = process.env.MQTT_PUBLISH;
 const subscribeTopic = process.env.MQTT_SUBSCRIBE
 
 // Format of broadcast messages
-const messageFormat = (field, value) => {
-    return `{"${field}":"${value}"}`;
+const messageFormat = (field, data) => {
+    return {command: field, value: data};
+    // return `{"${field}":"${value}"}`;
 }
 
 // Export service class
@@ -30,7 +31,7 @@ export default class
      */ 
     broadcastUpdate(ID, field, value) 
     {
-        const message = messageFormat(field, value)
+        const message = messageFormat(field, value);
         const topic = publishTopic+ID
 
         this.client.publish(topic, message, [{ retain: true}, { qos: 2}]);
