@@ -19,8 +19,12 @@ const subscribeTopic = process.env.MQTT_SUBSCRIBE
 
 // Format of broadcast messages
 const messageFormat = (field, data) => {
-    return {command: field, value: data};
-    // return `{"${field}":"${value}"}`;
+    $message = {
+        command: field,
+        value: data
+    };
+
+    return JSON.stringify($message)
 }
 
 // Export service class
