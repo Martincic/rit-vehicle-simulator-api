@@ -18,8 +18,8 @@ export default class {
         return sessions;
     }
 
-    static async createCar(input, userId) {
-        let sql = `INSERT INTO cars(user_id, nickname, description) VALUES(${userId}, "${input.nickname}", "${input.description}");`
+    static async createSession(userId) {
+        let sql = `INSERT INTO sessions(user_id, session_id) SELECT ${userId}, MAX(session_id)+1 FROM sessions;`
         
         try{
             await queryOne(sql)
@@ -29,8 +29,8 @@ export default class {
         return true;
     }
 
-    static async deleteCar(id) {
-        let sql = `DELETE FROM cars WHERE id = ${id};`;
+    static async deleteSession(id) {
+        let sql = `DELETE FROM sessions WHERE session_id = ${id};`;
         
         try{
             await queryOne(sql)
@@ -38,50 +38,6 @@ export default class {
         catch(err) { return false; }
 
         return true;
-    }
-
-    static async updateCar(id, input, mqtt, skip) 
-    {    
-        let hvac;
-        if(input.statistics.hvac == true) hvac = 1;
-        else if(input.statistics.hvac == false) hvac = 0;
-        else hvac = undefined; 
-
-        let sql = `UPDATE cars SET 
-            nickname = COALESCE(NULLIF('${input.nickname}', 'undefined'), nickname),
-            description = COALESCE(NULLIF('${input.description}', 'undefined'), description),
-            speed = COALESCE(NULLIF('${input.statistics.speed}', 'undefined'), speed),
-            hvac = COALESCE(NULLIF('${hvac}', 'undefined'), hvac),
-            stateOfCharge = COALESCE(NULLIF('${input.statistics.stateOfCharge}', 'undefined'), stateOfCharge),
-            latitude = COALESCE(NULLIF('${input.statistics.latitude}', 'undefined'), latitude),
-            longitude = COALESCE(NULLIF('${input.statistics.longitude}', 'undefined'), longitude)
-            
-            WHERE id = ${id};`;
-
-        let car;
-        try {
-            await queryOne(sql);
-            if(Object.prototype.hasOwnProperty.call(input, 'statistics')){
-                console.log("I am publishing statistics to MQTT!");
-
-                for (var prop in input.statistics) {
-                    if (Object.prototype.hasOwnProperty.call(input.statistics, prop)) {
-                        console.log("I am publishing statistics to MQTT!");
-
-                        if(!skip) {
-                            mqtt.broadcastUpdate(id, prop, input.statistics[prop]);
-                        }
-                    }
-                }            
-            }
-
-            car = await queryOne(`select * from cars where id = ${id};`);
-        }
-        catch (error) {
-            return error
-        }
-
-        return car;
     }
 
     static async findById(id, token) {
@@ -97,13 +53,35 @@ export default class {
         return sessions;
     }
 
-    static turnToCar(object) {
-        return {
-            id: object.id,
-            user: object.user_id,
-            nickname: object.nickname,
-            description: object.description,
-            
-        };
+    static async addEntry(sessionId, userID, input) 
+    {    
+        console.log(input);
+        let hvac;
+        if(input.hvac == true) hvac = 1;
+        else if(input.hvac == false) hvac = 0;
+        else hvac = undefined; 
+
+        let sql = `INSERT INTO sessions (session_id, user_id, speed, hvac, stateOfCharge, latitude, longitude)
+            VALUES (
+                ${sessionId},
+                ${userID},
+                NULLIF('${input.speed}', 'undefined'),
+                NULLIF('${input.hvac}', 'undefined'), 
+                NULLIF('${input.stateOfCharge}', 'undefined'), 
+                NULLIF('${input.latitude}', 'undefined'), 
+                NULLIF('${input.longitude}', 'undefined')
+            );`;
+
+        let car;
+        try {
+            await queryOne(sql);
+        }
+        catch (error) {
+            console.log(error)
+            return false;
+        }
+
+        return true;
     }
+
 }

@@ -51,6 +51,12 @@ export default class {
 
         await queryOne(sql);
     }
+    
+    static async checkIfUserOwnsSession(userId, sessionID) {
+        let sql = `SELECT * FROM sessions INNER JOIN users ON sessions.user_id = users.id WHERE users.id = ${userId} AND sessions.session_id = ${sessionID};`;
+
+        await queryOne(sql);
+    }
 
     /*  
         Create bearer token based on user's unique attributes + timestamp

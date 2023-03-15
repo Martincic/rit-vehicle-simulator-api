@@ -34,6 +34,7 @@ export function queryOne(sql) {
         resolve(results[0]);
       }
       catch(error) {
+        console.log(error);
         resolve(error)
       }
     });
