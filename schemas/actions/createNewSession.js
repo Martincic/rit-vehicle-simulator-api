@@ -1,10 +1,10 @@
-import { GraphQLBoolean, GraphQLString } from "graphql"
+import { GraphQLInt, GraphQLString } from "graphql"
 import carModel from "../../model/carModel.js";
 import sessionModel from "../../model/sessionModel.js";
 import userModel from "../../model/userModel.js";
 
 export const createNewSession = {
-  type: GraphQLBoolean,
+  type: GraphQLInt,
   args: {
       token: { type: GraphQLString },
   },

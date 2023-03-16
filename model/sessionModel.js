@@ -26,7 +26,14 @@ export default class {
         }
         catch(err) { return false; }
 
-        return true;
+        sql = `select max(session_id) as new from sessions;`
+        let data;
+        try{
+            data = await queryOne(sql)
+        }
+        catch(err) { return false; }
+
+        return data.new;
     }
 
     static async deleteSession(id) {
