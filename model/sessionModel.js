@@ -73,7 +73,7 @@ export default class {
                 ${sessionId},
                 ${userID},
                 NULLIF('${input.speed}', 'undefined'),
-                NULLIF('${input.hvac}', 'undefined'), 
+                NULLIF('${hvac}', 'undefined'), 
                 NULLIF('${input.stateOfCharge}', 'undefined'), 
                 NULLIF('${input.latitude}', 'undefined'), 
                 NULLIF('${input.longitude}', 'undefined')
