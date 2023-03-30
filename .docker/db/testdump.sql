@@ -2,7 +2,7 @@ CREATE TABLE users(id INT PRIMARY KEY AUTO_INCREMENT,full_name VARCHAR(60) NOT N
 
 CREATE TABLE cars(id INT PRIMARY KEY AUTO_INCREMENT,user_id INT NOT NULL,nickname VARCHAR(50) NOT NULL,description VARCHAR(300) NOT NULL,speed INT DEFAULT 0,hvac TINYINT DEFAULT 0,stateOfCharge INT DEFAULT 0, latitude VARCHAR(15) DEFAULT NULL,longitude VARCHAR(15) DEFAULT NULL);
 
-CREATE TABLE sessions(id INT PRIMARY KEY AUTO_INCREMENT, user_id INT NOT NULL, session_id INT NOT NULL, speed INT DEFAULT 0,hvac TINYINT DEFAULT 0,stateOfCharge INT DEFAULT 0, latitude VARCHAR(15) DEFAULT NULL,longitude VARCHAR(15) DEFAULT NULL, created_at datetime default CURRENT_TIMESTAMP);
+CREATE TABLE sessions(id INT PRIMARY KEY AUTO_INCREMENT, user_id INT NOT NULL, session_id INT NOT NULL, speed INT DEFAULT 0,hvac TINYINT DEFAULT 0,stateOfCharge INT DEFAULT 0, latitude VARCHAR(15) DEFAULT "0.0",longitude VARCHAR(15) DEFAULT "0.0", created_at datetime default CURRENT_TIMESTAMP);
 
  -- These passwords are: test123
 INSERT INTO users(id, full_name, email, password) VALUES(1, "John Doe", "john@doe.com", "$argon2id$v=19$m=65536,t=3,p=4$SORpKUUPF5YZ5IJm1kmSiA$+4K3L1+1UAD9Cqc9f5M6g7iYBPPOE+1LwavP/XK4HCA");

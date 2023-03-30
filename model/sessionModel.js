@@ -74,8 +74,8 @@ export default class {
                 NULLIF('${input.speed}', 'undefined'),
                 NULLIF('${hvac}', 'undefined'), 
                 NULLIF('${input.stateOfCharge}', 'undefined'), 
-                NULLIF('${input.latitude}', 'undefined'), 
-                NULLIF('${input.longitude}', 'undefined')
+                IFNULL(NULLIF('${input.latitude}', 'undefined'), "0.0"),
+                IFNULL(NULLIF('${input.longitude}', 'undefined'), "0.0")
             );`;
 
         let car;
