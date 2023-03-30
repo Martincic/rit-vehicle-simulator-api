@@ -19,8 +19,7 @@ export default class {
     }
 
     static async createSession(userId) {
-        let sql = `INSERT INTO sessions(user_id, session_id) SELECT ${userId}, MAX(session_id)+1 FROM sessions;`
-        
+        let sql = `INSERT INTO sessions(user_id, latitude, longitude, session_id) SELECT ${userId},0.0,0.0, MAX(session_id)+1 FROM sessions;`
         try{
             await queryOne(sql)
         }
