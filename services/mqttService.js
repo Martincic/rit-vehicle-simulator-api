@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import mqttResolver from './mqttResolver.js';
 
 dotenv.config({ path: ".env.dev" })
-
 // Define MQTT Connection options
 const options = {
     host: process.env.HOST,
