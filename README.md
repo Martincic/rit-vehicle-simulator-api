@@ -47,55 +47,8 @@ docker exec -it rit-vehicle-simulator-api_db_1 mysql -uroot -ppassword
 
 ## Query
 ```
-
-# Query and Mutation
-
-type Query {
-  login(input: LoginInput): User
-  register(name: String! input: LoginInput): User
-  getCars(token: String!): [Car]
-  getCar(carId: Int! token: String!): CarType
-}
-
-type Mutation {
-  createCar(token: String!, nickname: String!, description: String!): CarType
-  updateCar(id: Int!, token: String!, input: CarInput): Boolean
-  deleteCar(id: Int!, token: String!): Boolean
-}
-
-# Inputs
-
-input LoginInput {
-  email: String!
-  password: String!
-}
-
-input CarInput {
-  nickname: String
-  description: String
-  statistics: StatisticInputType
-}
-
-# Any updated values will be published to MQTT Broker
-input StatisticInputType {
-    speed: Int,
-    HVAC: Boolean,
-    stateOfCharge: Int,
-    latitude: Float,
-    longitude: Float
-}
-
-# Types
-
-type UserType {
-  id: Int
-  full_name: String
-  email: String
-  password: String
-  bearer_token: String
-}
-
-type CarType {
+# Car object which belongs to some user.
+type Car {
   id: Int!
   user: User!
   nickname: String
@@ -103,17 +56,80 @@ type CarType {
   statistics: CarStatistics
 }
 
-# This data can be changed at any moment via MQTT
-# it is important to refresh this continuously
-type CarStatistics {
-    speed: Int,
-    HVAC: Boolean,
-    stateOfCharge: Int,
-    latitude: Float,
-    longitude: Float
+# Input data for Car Type
+input CarInput {
+  nickname: String
+  description: String
+  statistics: CarStatisticsInput
 }
+
+
+# These fields can be updated at any moment via MQTT so refresh them 
+# continiously on the screen in order to have 'live' feed.
+
+type CarStatistics {
+  speed: Int
+  hvac: Boolean
+  stateOfCharge: Int
+  latitude: Float
+  longitude: Float
+}
+
+
+# These fields are inputs for car statistics. Whichever field, or group of fields
+# is updated, the information will be published to MQTT Broker.
+# input CarStatisticsInput {
+  speed: Int
+  hvac: Boolean
+  stateOfCharge: Int
+  latitude: Float
+  longitude: Float
+}
+
+# Login request for user
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+# Used to perform modification and update operations.
+type Mutation {
+  updateCar(id: Int, token: String, input: CarInput): Car
+  createCar(token: String, nickname: String, description: String): Boolean
+  deleteCar(token: String, id: Int): Boolean
+  createNewSession(token: String): Int
+  deleteSession(token: String, id: Int): Boolean
+  addSessionEntry(token: String, id: Int, input: CarStatisticsInput): Boolean
+}
+
+# Used to perform GET operations.
+type Query {
+  login(input: LoginInput): User
+  register(name: String!, input: LoginInput): User
+  getCars(token: String!): [Car]
+  getCar(carId: Int!, token: String!): Car
+  getSessions(token: String!): [Session]
+  getSession(id: Int!, token: String!): [Session]
+}
+
+# Session object - representing cars state at timestamp.
+type Session {
+  session_id: Int
+  created_at_formated: String
+  created_at: String
+  statistics: CarStatistics
+}
+
+# User type representing a user
+type User {
+  id: Int
+  full_name: String
+  email: String
+  password: String
+  bearer_token: String
+}
+
 ```
-![Schema of this graph](schema.png)
 
 
 ## Example Login
